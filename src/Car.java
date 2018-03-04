@@ -9,6 +9,7 @@ public class Car implements Runnable {
 		this.road = road;
 		
 		
+		
 	}
 
 	
@@ -50,20 +51,20 @@ public class Car implements Runnable {
 //        sleepTime = (long)(Math.random()*1000);
         
 //    }
-    public long getSleepTime() {
+//    public long getSleepTime() {
 //    	    setSleepTime();
-    		return (long)(Math.random()*1000);
+ //   		return (long)(Math.random()*1000);
 //    }
  
     
     
-//    public void run() {
-//    	try {
-//    		Thread.sleep(getSleepTime());
-//    	}
-//    	catch(InterruptedException e) {
+       public void run() {
+    	try {
+    		Thread.sleep(200);
+    	}
+     	catch(InterruptedException e) {
     		
- //   	}
+    	}
     	
     	
     }
