@@ -1,5 +1,4 @@
-import java.util.Random; 
-public class Road{
+ public class Road{
 	private String[][]road;
 	public Road(String[][]road) {
 		this.road = road;

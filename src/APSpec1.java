@@ -1,64 +1,86 @@
-import java.util.Random; 
-public class APSpec1{
+import java.util.concurrent.locks.*;
+public class APSpec1 implements Runnable{
+	final static int row =10;
+	final static int column = 20;
+	final static int runTimes = 2000; 
+	public static ReentrantLock[][] lock;
+	public static Condition[][] gridAvailable;
+	public static String[][]road;
 	
-	public static void main(String[] args) {
-		String[][]road = new String[10][20];
+	
+	@SuppressWarnings("static-access")
+	public APSpec1() {
+		road = new String[row][column];
+		this.lock = new ReentrantLock[row][column];
+		this.gridAvailable = new Condition[row][column];
 		
-		for(int i = 0; i < road.length; i ++) {
-			   for(int j = 0; j < road[i].length; j++) {
-			    road[i][j] = "";
-			   }
-			   }
-//		road[0][0]= "o";
-//		road[0][1]= "-";
-		
-//		Road roads = new Road(road);
-//		Car cars = new Car(road);
-//	    cars.carMove(roads);
-     
-		
-//		try {
-//	  		Thread.sleep(1000);
-//	    		}
-//			catch(InterruptedException e) {
-	    		
-//	    		};
-		
-        int minX = 0 ;
-        int maxX = 10;
-        int minY = 0;
-        int maxY = 20;
-        
-        
-      	int nThreads = 100;
-		Thread[] threads = new Thread[nThreads];
-		Car[]car = new Car[nThreads];
-		
-		for(int i=0;i<nThreads;i++) {
-			int x1 = (int)Math.round(Math.random()*(maxX-minX)+minX);
-	        int y1= (int)Math.round(Math.random()*(maxY-minY)+minY);
-	        int x2  = (int)Math.round(Math.random()*(maxX-minX)+minX);
-	        int y2= (int)Math.round(Math.random()*(maxY-minY)+minY);
-	        
-	        road[x1][y1]= "o";
-	        road[x2][y2]= "-";
-			car[i] = new Car(road);
-			threads[i] = new Thread(car[i]);
-			
-			threads[i].start();
-			
-			Road roads = new Road(road);
-			car[i].carMove(roads);
-			
+		for(int i = 0; i< road.length;i++) {
+			for(int j =0 ; j < road[i].length;j++) {
+				road[i][j]="";
+				this.lock[i][j] = new ReentrantLock();
+				this.gridAvailable[i][j] = this.lock[i][j].newCondition();
+			}
+				
 		}
-		 
-		
-			
 		
 	}
 	
+	public void run() {
+		int i = 0;
+		while( i < runTimes) {
+			Car car = null;
+			Thread carThread = null;
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			int random  = (int)(0+Math.random()*2);
+			if(random == 0) {
+				int startPoint = (int)(0+Math.random()*10);
+				car = new CarW2E(road,startPoint,lock,gridAvailable);
+	    			
+			}
+			else if(random == 1) {
+				int startPoint = (int)(0+Math.random()*20);
+				car = new CarN2S(road,startPoint,lock,gridAvailable);
+			}
+			carThread = new Thread(car);
+			carThread.start();
+			i++;
+		}		
+	}
 	
-	
+	public static void main(String[] args) {
+		
+		road = new String[row][column];
+		for(int i = 0; i< road.length;i++) {
+			for(int j =0 ; j < road[i].length;j++) {
+				road[i][j]="";
+			}
+				
+		}
+		
+		Thread generator = new Thread(new APSpec1());
+		generator.start();
+		
+	    Road roads = new Road(road);
+	    int i = 0;
+	    while(i < runTimes) {
+	    	try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+	    	roads.printRoad();
+	    	i++;
+	    	System.out.println("\n->"+i);
+	    }
+			
 }
+
+}
+
+
 
 

@@ -1,72 +1,32 @@
-import java.util.Random; 
+import java.util.concurrent.locks.*; 
 public class Car implements Runnable {
-	private String carName;
-	private int x, y;
-    private long sleepTime;
-	private Road roads;
-    private String[][]road;
-	public Car(String[][]road) {
-		this.road = road;
+    protected int sleepTime;
+    protected String[][]road;
+    protected int startPointX; 
+    protected int startPointY;
+    protected ReentrantLock[][]lock;
+    protected Condition[][] gridAvailable;
+    protected String type;
+    
+	public Car(String[][] road, int startPoint, ReentrantLock[][] lock,Condition[][] gridAvailable) {
+		this.sleepTime = (int)(100 + Math.random()*900);
+		this.road= road;
+		this.lock = lock;
+		this.gridAvailable = gridAvailable;
 		
 		
 		
 	}
 
-	
-	public void carMove(Road roads) {
-		this.roads = roads;
-		for(int i=0;i<road.length;i++) {
-			for(int j=0;j<road[i].length;j++) {
-				try {
-			  		Thread.sleep(200);
-			    		}
-					catch(InterruptedException e) {
-			    		
-			    		};
-				
-				if(road[i][j].equals("o")) {
-				    if(i+1<road.length) {
-					road[i+1][j]=road[i][j];
-					road[i][j]="";
-				    }
-				    else
-				    		break;
-				}
-				else if(road[i][j].equals("-")) {
-					if(j+1<road[i].length) {
-					road[i][j+1]=road[i][j];
-					road[i][j]="";
-					}
-					else 
-						break;
-				}
-				roads.printRoad();
-			}
-			
-		}
+	public int getSleepTime() {
+		return sleepTime;
 		
-	
 	}
-//    private void setSleepTime(){
-//        sleepTime = (long)(Math.random()*1000);
-        
-//    }
-//    public long getSleepTime() {
-//    	    setSleepTime();
- //   		return (long)(Math.random()*1000);
-//    }
- 
-    
-    
-       public void run() {
-    	try {
-    		Thread.sleep(200);
-    	}
-     	catch(InterruptedException e) {
-    		
-    	}
+	public void carMove() throws InterruptedException {}
+
+	@Override
+    public void run() {}
     	
     	
     }
 
-}
