@@ -1,4 +1,5 @@
-import java.util.concurrent.locks.*;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 public class CarN2S extends Car{
 	public CarN2S(String[][] road, int startPoint, ReentrantLock[][] lock,Condition[][] gridAvailable) {
 		super(road, startPoint, lock, gridAvailable);

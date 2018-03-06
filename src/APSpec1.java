@@ -1,8 +1,9 @@
-import java.util.concurrent.locks.*;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
 public class APSpec1 implements Runnable{
-	final static int row =10;
-	final static int column = 20;
-	final static int runTimes = 2000; 
+	public static int row;
+	public static int column ;
+	public static int runTimes; 
 	public static ReentrantLock[][] lock;
 	public static Condition[][] gridAvailable;
 	public static String[][]road;
@@ -10,6 +11,9 @@ public class APSpec1 implements Runnable{
 	
 	@SuppressWarnings("static-access")
 	public APSpec1() {
+		row = 10;
+		column =20;
+		runTimes =2000;
 		road = new String[row][column];
 		this.lock = new ReentrantLock[row][column];
 		this.gridAvailable = new Condition[row][column];
@@ -27,8 +31,8 @@ public class APSpec1 implements Runnable{
 	
 	public void run() {
 
-		CarController controller = new CarController(road,lock,gridAvailable);
-		controller.setCar();
+		CarController controller = new CarController(road,lock,gridAvailable,row,column);
+		controller.setCar(true);
 	}
 	
 	public static void main(String[] args) {

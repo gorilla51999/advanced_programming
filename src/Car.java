@@ -1,4 +1,5 @@
-import java.util.concurrent.locks.*; 
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock; 
 public class Car implements Runnable {
     protected int sleepTime;
     protected String[][]road;
@@ -7,6 +8,7 @@ public class Car implements Runnable {
     protected ReentrantLock[][]lock;
     protected Condition[][] gridAvailable;
     protected String type;
+//    protected StatisticsReport report;
     
 	public Car(String[][] road, int startPoint, ReentrantLock[][] lock,Condition[][] gridAvailable) {
 		this.sleepTime = (int)(100 + Math.random()*900);
