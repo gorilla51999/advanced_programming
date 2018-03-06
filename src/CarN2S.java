@@ -8,7 +8,9 @@ public class CarN2S extends Car{
 		this.startPointX = 0;
 	}
 	
-	public void carMove() {
+
+	
+	public void run() {
 		int x = startPointX;
 		for( ; x < road.length; x++) {
 			try {
@@ -43,10 +45,7 @@ public class CarN2S extends Car{
 		road[x - 1][startPointY] = "";
 		this.gridAvailable[x - 1][startPointY].signalAll();
 		this.lock[x - 1][startPointY].unlock();
-	}
-	
-	public void run() {
-		carMove();
+
 			
 	}
 			

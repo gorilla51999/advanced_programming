@@ -4,9 +4,12 @@ public class APSpec1 implements Runnable{
 	public static int row;
 	public static int column ;
 	public static int runTimes; 
+	public static long drawGridTime;
+	public static long drawCarTime;
 	public static ReentrantLock[][] lock;
 	public static Condition[][] gridAvailable;
 	public static String[][]road;
+	
 	
 	
 	@SuppressWarnings("static-access")
@@ -14,6 +17,8 @@ public class APSpec1 implements Runnable{
 		row = 10;
 		column =20;
 		runTimes =2000;
+		drawGridTime = 20;
+		drawCarTime = (long) (200+Math.random()*200);
 		road = new String[row][column];
 		this.lock = new ReentrantLock[row][column];
 		this.gridAvailable = new Condition[row][column];
@@ -31,7 +36,7 @@ public class APSpec1 implements Runnable{
 	
 	public void run() {
 
-		CarController controller = new CarController(road,lock,gridAvailable,row,column);
+		CarController controller = new CarController(road,lock,gridAvailable,row,column,runTimes,drawCarTime);
 		controller.setCar(true);
 	}
 	
@@ -44,7 +49,7 @@ public class APSpec1 implements Runnable{
 	    int i = 0;
 	    while(i < runTimes) {
 	    	try {
-				Thread.sleep(20);
+				Thread.sleep(drawGridTime);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -52,6 +57,7 @@ public class APSpec1 implements Runnable{
 	    	i++;
 	    	System.out.println("\n->"+i);
 	    }
+	    System.out.println("part1 done");
 			
 }
 

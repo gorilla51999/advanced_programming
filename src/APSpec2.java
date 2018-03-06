@@ -1,9 +1,11 @@
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 public class APSpec2 implements Runnable{
-	final static int row =10;
-	final static int column = 20;
-	final static int runTimes = 2000; 
+	public static int row;
+	public static int column;
+	public static int runTimes;
+	public static long drawGridTime;
+	public static long drawCarTime;
 	public static ReentrantLock[][] lock;
 	public static Condition[][] gridAvailable;
 	public static String[][]road;
@@ -11,6 +13,11 @@ public class APSpec2 implements Runnable{
 	
 	@SuppressWarnings("static-access")
 	public APSpec2() {
+		row = 10;
+		column =20;
+		runTimes =2000;
+		drawGridTime = 20;
+		drawCarTime = (long) (200+Math.random()*200);
 		road = new String[row][column];
 		this.lock = new ReentrantLock[row][column];
 		this.gridAvailable = new Condition[row][column];
@@ -28,7 +35,7 @@ public class APSpec2 implements Runnable{
 	
 	public void run() {
 
-		CarController controller = new CarController(road,lock,gridAvailable,row,column);
+		CarController controller = new CarController(road,lock,gridAvailable,row,column,runTimes,drawCarTime);
 		controller.setCar(false);
 	}
 	
@@ -41,7 +48,7 @@ public class APSpec2 implements Runnable{
 	    int i = 0;
 	    while(i < runTimes) {
 	    	try {
-				Thread.sleep(20);
+				Thread.sleep(drawGridTime);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -49,7 +56,7 @@ public class APSpec2 implements Runnable{
 	    	i++;
 	    	System.out.println("\n->"+i);
 	    }
-			
+		System.out.println("part2 done!");
 }
 
 }

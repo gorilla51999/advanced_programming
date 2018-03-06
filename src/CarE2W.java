@@ -8,7 +8,9 @@ import java.util.concurrent.locks.ReentrantLock;
 			this.startPointY = this.road[startPointX].length-1;
 		}
 		
-		public void carMove() {
+
+		
+		public void run() {			
 			int y = startPointY;
 			for( ;y >= 0; y--) {
 				try {
@@ -44,10 +46,6 @@ import java.util.concurrent.locks.ReentrantLock;
 			road[startPointX][y + 1] = "";
 			this.gridAvailable[startPointX][y + 1].signalAll();
 			this.lock[startPointX][y + 1].unlock();
-		}
-		
-		public void run() {		
-			this.carMove();	
 		}
 		
 	}

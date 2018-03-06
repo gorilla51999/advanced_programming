@@ -22,9 +22,8 @@ public class Car implements Runnable {
 
 	public int getSleepTime() {
 		return sleepTime;
-		
-	}
-	public void carMove() throws InterruptedException {}
+		}
+	
 
 	@Override
     public void run() {}

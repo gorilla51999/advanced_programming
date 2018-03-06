@@ -2,17 +2,20 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class CarController {
-	final   int runTimes = 2000;
+	public   int runTimes;
 	public  ReentrantLock[][] lock;
 	public  Condition[][] gridAvailable;
 	public  String[][]road;
 	public 	int row, column;
-	public CarController(String[][]road,ReentrantLock[][] lock,Condition[][] gridAvailable,int row,int column) {
+	public  long drawCarTime;
+	public CarController(String[][]road,ReentrantLock[][] lock,Condition[][] gridAvailable,int row,int column,int runTimes,long drawCarTime) {
 		this.road = road;
 		this.lock = lock;
 		this.gridAvailable= gridAvailable;
 		this.row =row;
 		this.column =column;
+		this.runTimes = runTimes;
+		this.drawCarTime = drawCarTime;
 	}
 	public void setCar(boolean spec1) {
     boolean b = spec1; 
@@ -21,7 +24,7 @@ public class CarController {
 		Car car = null;
 		Thread carThread = null;
 		try {
-			Thread.sleep(200);
+			Thread.sleep(drawCarTime);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -29,12 +32,12 @@ public class CarController {
 		if(b==true) {
 			int random  = (int)(0+Math.random()*2);
 			if(random == 0) {
-			int startPoint = (int)(0+Math.random()*10);
+			int startPoint = (int)(0+Math.random()*row);
 			car = new CarW2E(road,startPoint,lock,gridAvailable);
     			
 			}
 			else if(random == 1) {
-			int startPoint = (int)(0+Math.random()*20);
+			int startPoint = (int)(0+Math.random()*column);
 			car = new CarN2S(road,startPoint,lock,gridAvailable);
 			}
 		}
