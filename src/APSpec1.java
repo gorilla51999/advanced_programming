@@ -36,8 +36,29 @@ public class APSpec1 implements Runnable{
 	
 	public void run() {
 
-		CarController controller = new CarController(road,lock,gridAvailable,row,column,runTimes,drawCarTime);
-		controller.setCar(true);
+		int i = 0;
+		while( i < runTimes) {
+			Car car = null;
+			Thread carThread = null;
+			try {
+				Thread.sleep(drawCarTime);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			int random  = (int)(0+Math.random()*2);
+			if(random == 0) {
+			int startPoint = (int)(0+Math.random()*row);
+			car = new CarW2E(road,startPoint,lock,gridAvailable);
+    			
+			}
+			else if(random == 1) {
+			int startPoint = (int)(0+Math.random()*column);
+			car = new CarN2S(road,startPoint,lock,gridAvailable);
+			}
+			carThread = new Thread(car);
+			carThread.start();
+			i++;
+			}
 	}
 	
 	public static void main(String[] args) {
