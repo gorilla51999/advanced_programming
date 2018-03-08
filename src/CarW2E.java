@@ -1,13 +1,21 @@
 import java.util.concurrent.locks.*;
 	public class CarW2E extends Car{
-		public CarW2E(String[][] road, int startPoint, ReentrantLock[][] lock,Condition[][] gridAvailable) {
+		public CarW2E(String[][] road, int startPoint, ReentrantLock[][] lock,Condition[][] gridAvailable,Report report) {
+			super(road, startPoint, lock, gridAvailable,report);
+			this.type = "-";
+			this.startPointX = startPoint;
+			this.startPointY = 0;
+			this.road =road;
+		}
+/*		public CarW2E(String[][] road, int startPoint, ReentrantLock[][] lock,Condition[][] gridAvailable) {
 			super(road, startPoint, lock, gridAvailable);
 			this.type = "-";
 			this.startPointX = startPoint;
 			this.startPointY = 0;
+			
+			
 		}
-		
-
+*/
 		
 		public void run() {	
 			int y = startPointY;
@@ -45,6 +53,10 @@ import java.util.concurrent.locks.*;
 			road[startPointX][y - 1] = "";
 			this.gridAvailable[startPointX][y - 1].signalAll();
 			this.lock[startPointX][y - 1].unlock();
+			long end = System.currentTimeMillis();
+			double time =(double) end - this.start;
+		    //this.report.getCarData(time);
+			this.report.carData.add(time);
 			
 		}
 		

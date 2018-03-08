@@ -1,14 +1,21 @@
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 public class CarN2S extends Car{
-	public CarN2S(String[][] road, int startPoint, ReentrantLock[][] lock,Condition[][] gridAvailable) {
+	public CarN2S(String[][] road, int startPoint, ReentrantLock[][] lock,Condition[][] gridAvailable,Report report) {
+		super(road, startPoint, lock, gridAvailable,report);
+		this.type = "o";
+		this.startPointY = startPoint;
+		this.startPointX = 0;
+		this.road =road;
+	}
+	
+/*	public CarN2S(String[][] road, int startPoint, ReentrantLock[][] lock,Condition[][] gridAvailable) {
 		super(road, startPoint, lock, gridAvailable);
 		this.type = "o";
 		this.startPointY = startPoint;
 		this.startPointX = 0;
 	}
-	
-
+*/
 	
 	public void run() {
 		int x = startPointX;
@@ -42,9 +49,14 @@ public class CarN2S extends Car{
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		
 		road[x - 1][startPointY] = "";
 		this.gridAvailable[x - 1][startPointY].signalAll();
 		this.lock[x - 1][startPointY].unlock();
+		long end = System.currentTimeMillis();
+		double time =(double) end - this.start;
+//	    this.report.getCarData(time);
+		this.report.carData.add(time);
 
 			
 	}

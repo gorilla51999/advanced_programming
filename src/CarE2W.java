@@ -1,11 +1,12 @@
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 	public class CarE2W extends Car{
-		public CarE2W(String[][] road, int startPoint, ReentrantLock[][] lock,Condition[][] gridAvailable) {
-			super(road, startPoint, lock, gridAvailable);
+		public CarE2W(String[][] road, int startPoint, ReentrantLock[][] lock,Condition[][] gridAvailable, Report report) {
+			super(road, startPoint, lock, gridAvailable,report);
 			this.type = "-";
 			this.startPointX = startPoint;
 			this.startPointY = this.road[startPointX].length-1;
+			this.road = road;
 		}
 		
 
@@ -46,6 +47,10 @@ import java.util.concurrent.locks.ReentrantLock;
 			road[startPointX][y + 1] = "";
 			this.gridAvailable[startPointX][y + 1].signalAll();
 			this.lock[startPointX][y + 1].unlock();
+			long end = System.currentTimeMillis();
+			double time =(double) end - this.start;
+//			this.report.getCarData(time);
+			this.report.carData.add(time);
 		}
 		
 	}
