@@ -1,12 +1,17 @@
+// this subclass for the car driving form west to east
 import java.util.concurrent.locks.*;
 	public class CarW2E extends Car{
 		public CarW2E(String[][] road, int startPoint, ReentrantLock[][] lock,Condition[][] gridAvailable,Report report) {
 			super(road, startPoint, lock, gridAvailable,report);
+			// stand for west-east car
 			this.type = "-";
+			// get the starting point of a car
 			this.startPointX = startPoint;
+			// The cars of this direction are begin with first column
 			this.startPointY = 0;
 			this.road =road;
 		}
+		// it is just for Spec1
 /*		public CarW2E(String[][] road, int startPoint, ReentrantLock[][] lock,Condition[][] gridAvailable) {
 			super(road, startPoint, lock, gridAvailable);
 			this.type = "-";
@@ -55,7 +60,7 @@ import java.util.concurrent.locks.*;
 			this.lock[startPointX][y - 1].unlock();
 			long end = System.currentTimeMillis();
 			double time =(double) end - this.start;
-		    //this.report.getCarData(time);
+		  
 			this.report.carData.add(time);
 			
 		}

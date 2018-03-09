@@ -1,3 +1,4 @@
+// this subclass for the car driving form east to west(level 2 only)
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 	public class CarE2W extends Car{
@@ -49,7 +50,6 @@ import java.util.concurrent.locks.ReentrantLock;
 			this.lock[startPointX][y + 1].unlock();
 			long end = System.currentTimeMillis();
 			double time =(double) end - this.start;
-//			this.report.getCarData(time);
 			this.report.carData.add(time);
 		}
 		

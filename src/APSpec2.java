@@ -4,12 +4,15 @@ public class APSpec2 implements Runnable{
 	public static int row;
 	public static int column;
 	public static int runTimes;
+	// time gap between print two road 
 	public static long drawGridTime;
+	// time gap between generate two cars
 	public static long drawCarTime;
 	public static ReentrantLock[][] lock;
 	public static Condition[][] gridAvailable;
 	public static String[][]road;
 	public static int index;
+	//which can set the area where allow different kind of car pass
 	public static int borderX1, borderX2, borderX3, borderX4;
 	public static int borderY1, borderY2, borderY3, borderY4;
 	public static Report report;
@@ -32,8 +35,8 @@ public class APSpec2 implements Runnable{
 		borderY2 = 10;
 		borderY3 = 10;
 		borderY4 = 10;
-		//drawCarTime = (long) (200+Math.random()*200);
-		drawCarTime = 500;
+		//traffic flow are random so the the frequency of car thread generated randomly
+		drawCarTime = (long) (200+Math.random()*200);
 		report = new Report();
 		road = new String[row][column];
 		this.lock = new ReentrantLock[row][column];
@@ -75,7 +78,7 @@ public class APSpec2 implements Runnable{
 				break;
 			}
 			
-			
+			// Randomly generate 4 different directions of cars
 			int random  = (int)(0+Math.random()*4);
 			switch(random) {
 				case 0 :{ int  startPoint = (int)(borderX1+Math.random()*borderX2);
@@ -121,12 +124,16 @@ public class APSpec2 implements Runnable{
 				e.printStackTrace();
 			}
 	    	roads.printRoad();
+	    	//record the running times.
 	    	index++;
+	    	// show the running times.
 	    	System.out.println("\n->"+index);
 	    }
+      
 	    System.out.println("please waitting for report");
+	   //waiting for all car threads finished and print the statistical report
 		while(Thread.activeCount()>1) {
-		//System.out.println("current thread :" + Thread.activeCount()+" ,please waitting for report");
+	
 			}
 	    report.printReport();
 	    System.out.println("END");

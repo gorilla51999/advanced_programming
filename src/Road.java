@@ -1,4 +1,5 @@
- public class Road{
+// this class for printing the road information
+public class Road{
 	private String[][]road;
 	public Road(String[][]road) {
 		this.road = road;
@@ -8,7 +9,7 @@
 	}
 	
 	
-  
+   
 	public void printRoad() {
 		
 		String s= "\n";
